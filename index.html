@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thư thông báo mật!</title>
+    <!-- Nhúng Font chữ hệ thống và Font viết tay dễ thương -->
+    <link href="https://fonts.googleapis.com/css2?family=Mali:ital,wght@0,400;0,600;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            background-color: #008080;
+            font-family: 'Space Mono', monospace;
+            margin: 0;
+            overflow: hidden; /* Ngăn cuộn trang để nút chạy trốn không làm hỏng màn hình */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #000;
+        }
+
+        /* Khung cửa sổ Y2K chung */
+        .window {
+            background: #c0c0c0;
+            border: 2px solid;
+            border-color: #ffffff #000000 #000000 #ffffff;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 4px 4px 0 rgba(0,0,0,0.5);
+            display: none; /* Ẩn mặc định */
+            position: absolute;
+            z-index: 10;
+        }
+
+        .window.active {
+            display: block;
+            animation: popUp 0.3s ease-out;
+        }
+
+        @keyframes popUp {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Thanh tiêu đề */
+        .title-bar {
+            background: #000080;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .title-bar.pink { background: #d81b60; } /* Đổi màu cho các trang dễ thương */
+
+        .content {
+            padding: 20px;
+            font-size: 15px;
+            text-align: center;
+        }
+
+        /* Nút bấm */
+        button {
+            font-family: 'Space Mono', monospace;
+            background: #c0c0c0;
+            border: 2px solid;
+            border-color: #ffffff #000000 #000000 #ffffff;
+            padding: 8px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 10px;
+            font-size: 14px;
+        }
+
+        button:active { border-color: #000000 #ffffff #ffffff #000000; }
+        
+        .btn-cute { background: #ffb6c1; } /* Nút màu hồng */
+
+        /* Logic cho nút chạy trốn */
+        #btn-no {
+            position: relative;
+            transition: top 0.1s, left 0.1s;
+        }
+
+        /* Ảnh trang trí */
+        .sticker {
+            max-width: 120px;
+            margin: 10px auto;
+            display: block;
+        }
+
+        /* Định dạng riêng cho trang Thiệp (Window 3) */
+        .invitation-card {
+            background: #fffdf0; /* Giấy vàng nhạt */
+            border: 2px dashed #d81b60;
+            padding: 20px;
+            font-family: 'Mali', cursive; /* Font viết tay */
+            text-align: left;
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+        .invitation-card strong { color: #d81b60; }
+    </style>
+</head>
+<body>
+
+    <!-- TRANG 1: Cảnh báo hệ thống (Troll) -->
+    <div class="window active" id="win-1">
+        <div class="title-bar">
+            <span>⚠️ ERROR_FATAL.exe</span>
+            <span>X</span>
+        </div>
+        <div class="content">
+            <!-- Thay link ảnh Cu Shin hoang mang vào src bên dưới -->
+            <img class="sticker" src="https://media.tenor.com/tBw_2_O6E0kAAAAj/shin-chan-shin.gif" alt="Cu Shin">
+            <p><strong>CẢNH BÁO BẢO MẬT!</strong></p>
+            <p>Hệ thống phát hiện một gói dữ liệu tối mật. Yêu cầu xác nhận bạn đã sẵn sàng nhận thông tin này!</p>
+            <div>
+                <button onclick="nextWin(2)">[ Đồng ý ]</button>
+                <button id="btn-no" onmouseover="dodgeCursor()">[ Từ chối ]</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TRANG 2: Lời nhắn 1 năm -->
+    <div class="window" id="win-2">
+        <div class="title-bar pink">
+            <span>💌 Message_Received.txt</span>
+        </div>
+        <div class="content">
+            <!-- Thay link ảnh Logo ATVNCG vào src bên dưới -->
+            <img class="sticker" style="max-width: 150px;" src="https://m.yodycdn.com/blog/anh-trai-vuot-ngan-chong-gai-yody-vn-1.jpg" alt="Logo Anh Tài">
+            <p style="font-family: 'Mali', cursive; font-size: 18px; font-weight: 600;">
+                "Cảm ơn em đã ở cạnh chị trong 1 năm qua. <br>Đây là thư thông báo cho bữa tối của tụi mình!"
+            </p>
+            <button class="btn-cute" onclick="nextWin(3)">[ Mở thư ra xem nè ]</button>
+        </div>
+    </div>
+
+    <!-- TRANG 3: Thiệp mời -->
+    <div class="window" id="win-3" style="max-width: 500px;">
+        <div class="title-bar pink">
+            <span>✨ Dinner_Invitation.doc</span>
+        </div>
+        <div class="content">
+            <div class="invitation-card">
+                <strong>⏰ Thời gian:</strong> 18g00 ngày 19.10.2026<br>
+                <strong>📍 Địa điểm:</strong> Mì Á Pasta (294 Pasteur, Xuân Hòa, Hồ Chí Minh)<br>
+                <strong>🛵 Phương tiện:</strong> Tui sẽ đón em tại Hùng Vương Plaza lúc 17g00<br>
+                <strong>👗 Dresscode:</strong> Trang phục em yêu thích là được nha!
+            </div>
+            <button class="btn-cute" onclick="nextWin(4)">[ Đã rõ thưa sếp! ]</button>
+        </div>
+    </div>
+
+    <!-- TRANG 4: Tạm biệt -->
+    <div class="window" id="win-4">
+        <div class="title-bar">
+            <span>💖 See_You_Soon.exe</span>
+        </div>
+        <div class="content">
+            <p style="font-family: 'Mali', cursive; font-size: 22px; font-weight: bold; color: #d81b60;">
+                Bái bai, love youuuu! 💕
+            </p>
+            <!-- Thay link ảnh Cu Shin thả tim vào src bên dưới -->
+            <img class="sticker" src="https://media.tenor.com/5V1pZf9n-78AAAAj/shin-chan-love.gif" alt="Cu Shin Heart">
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT XỬ LÝ LOGIC -->
+    <script>
+        // Chuyển trang
+        function nextWin(step) {
+            // Tắt hết các cửa sổ
+            document.querySelectorAll('.window').forEach(w => w.classList.remove('active'));
+            // Bật cửa sổ tiếp theo
+            document.getElementById('win-' + step).classList.add('active');
+        }
+
+        // Logic làm nút "Từ chối" né chuột
+        function dodgeCursor() {
+            const btn = document.getElementById('btn-no');
+            
+            // Chuyển nút thành position fixed để bay tự do trên toàn màn hình
+            btn.style.position = 'fixed';
+            
+            // Tính toán để nút không bay ra ngoài lề màn hình
+            const maxX = window.innerWidth - btn.offsetWidth - 20;
+            const maxY = window.innerHeight - btn.offsetHeight - 20;
+            
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+            
+            btn.style.left = randomX + 'px';
+            btn.style.top = randomY + 'px';
+        }
+    </script>
+</body>
+</html>
